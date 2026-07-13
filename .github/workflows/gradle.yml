@@ -19,10 +19,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run SUT (Application)
-        run: jjava -jar artifacts/app-ibank-build-for-testers.jar &
-
-      - name: Wait for SUT to start
-        run: sleep 10
+        run: java -jar artifacts/app-ibank-build-for-testers.jar &
 
       - name: Build with Gradle
         run: ./gradlew test --info -Dselenide.headless=true
