@@ -47,4 +47,21 @@ public class MoneyTransferTest {
         assertEquals(startBalanceFirst + transferAmount, endBalanceFirst);
         assertEquals(startBalanceSecond - transferAmount, endBalanceSecond);
     }
+
+    @Test
+    void shouldNotTransferMoneyIfAmountExceedsBalance() {
+
+        int startBalanceFirst = dashboardPage.getCardBalance(firstCard.getId());
+        int startBalanceSecond = dashboardPage.getCardBalance(secondCard.getId());
+
+
+        int transferAmount = startBalanceSecond + 10_000;
+
+        TransferPage transferPage = dashboardPage.selectCardToTransfer(firstCard.getId());
+
+        dashboardPage = transferPage.makeTransfer(String.valueOf(transferAmount), secondCard.getCardNumber());
+
+        int endBalanceSecond = dashboardPage.getCardBalance(secondCard.getId());
+        assertEquals(startBalanceSecond, endBalanceSecond);
+    }
 }
